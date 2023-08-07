@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BrainBattle - Home{% endblock %}
+
+{% block body %}   
+<div class="d-flex grid gap-3">
+  <div class="px-4 py-5">
+    {# <div class="p-5 text-center shadow-1-strong rounded mb-5 text-black"> #}
+      <img class="object-fit-scale border rounded" id="jumbo-img" src="{{ asset('assets/images/hero.jpeg') }}" alt=""> 
+  </div>    
+  <div class="text-center">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <h1 scope="col">Ready to play $user?</h1>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Your row title</th>
+            <td>Your row data</td>
+          </tr>
+          <tr>
+            <th scope="row">Your row 2 title</th>
+            <td>Your row data</td>
+          </tr>
+          <tr>
+            <th scope="row">Your row 3 title</th>
+            <td>Your row data</td>
+          </tr>
+          <tr>
+            <th scope="row">Your row 4 title</th>
+            <td>Your row data</td>
+          </tr>
+        </tbody>
+      </table>  
+  </div>     
+</div>
+
+<section class="cardsquiz">
+  <h2>Brain Gymnastic for everyone</h2>
+{# {% for quiz in quizzes.category %} #}
+  <div class="row">
+   <div class="col-sm-6 mb-3 mb-sm-0">
+      {% for quiz in quizzes %}
+        <div class="card ">
+          <img class="" src="{{ quiz.image}}" class="card-img-top" alt="..."> 
+            <div class="card-body">
+              <h4 class="card-title">{{quiz.quizName}}</h4>
+              {# <h5 class="card-title">{{place.subtitle}}</h5> #}
+              <p class="text">Category : {{quiz.category.CatName}}</p>
+              <a href="{{ path('app_quiz_onequiz', {'id': quiz.id}) }}">Take the Quiz
+            </div>
+        </div>
+{% endfor %}
+</div>
+</div>
+   
+   
+ {#   <div class="row">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="card">
+    <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Quiz name</h5>
+        <p class="card-text">Short quiz description.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+    <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+    </div>
+ </div>
+ <div class="row">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="card">
+    <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div> #}
+
+    </section>
+{% endblock %}

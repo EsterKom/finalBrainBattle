@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+/* :root {
+    --main-title-font: "Montserrat";
+    --main-subtitle-font: "Amiri";
+    --main-font: "Maitree";  
+} */
+
+
+.full-page {
+    height: 80vh;
+    width: 100%;
+}
+
+.container-flex {
+    display: flex;
+}
+
+.m-auto{
+    margin: auto;
+}
+
+.m-bottom {
+    margin-bottom: 27%;
+}
+
+.m-h1 {
+    margin: 20% 7% auto;
+}
+
+.m-text-pitch{
+    margin: 0.2% 10% 0.2%;
+}
+
+.flex-column {
+    flex-direction: column;
+    
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+}
+.landingtitle {
+    font-size: 6rem;
+    font-weight: 800;
+}
+
+span {
+    font-style: italic;
+}
+
+
+.pitch-text {
+    /* font-family: var(--main-font); */
+    font: 1.3em --main-font;
+    font-weight: 500;
+
+}
+
+/* LANDING PAGE */
+
+.half {
+    display: flex;
+    flex: 50%;
+    flex-wrap: wrap;
+}
+
+.div-img {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 0.5px solid red;
+    
+}
+.big-head {
+    height: 12rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 0.5px dotted blue;
+} 
+
+/* QUIZ PAGE */
+
+#jumbo-img {
+    border: 1p solid black;
+    height: 350px;
+}
+
+.cardQuizImage {
+    height: 15rem;
+}

@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BrainBattle - {quizname}{% endblock %}
+
+
+{% block body %}   
+<div class="d-flex grid gap-3">
+  <div class="px-4 py-5">
+    {# <div class="p-5 text-center shadow-1-strong rounded mb-5 text-black"> #}
+  </div>    
+  <div class="text-center">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <h1 scope="col">Ready to play $user?</h1>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Your row title</th>
+            <td>Your row data</td>
+          </tr>
+          <tr>
+            <th scope="row">Your row 2 title</th>
+            <td>Your row data</td>
+          </tr>
+          <tr>
+            <th scope="row">Your row 3 title</th>
+            <td>Your row data</td>
+          </tr>
+        </tbody>
+      </table>  
+  </div>     
+</div>
+<div>
+  <div id="question-container">
+        <p id="category"></p>
+        <h1>Question</h1>
+        <p id="question"></p>
+        <ul id="answers" class="quiz-options">
+        </ul>
+        <button id="next-btn">Next</button>
+  </div>
+  <div>
+    <form action="" method="post">
+                <div id = "result">
+                </div>
+  </form>
+  </div>
+  
+  <div class="side-container">
+    <button id="reset">Reset</button>
+    <button id="checkAnswer">Check Answer</button>
+      <p class="text">Question number : </p>
+      <p id="question-nbr"></p>
+  </div>
+    <!-- Display JSON data on the page -->
+    {# <pre>{{ questions | json_encode | raw }}</pre> #}
+    {# <script>
+    var questions = {{questions | json_encode | raw }};
+    questions.forEach(function(item, index) => {
+            console.log(item, index);
+        });
+    
+     </script> #}
+</div>   
+</section>
+
+<script>
+// Pass the JSON data from PHP to JavaScript
+///make sure the document has been loaded before showing questions to avoid undefined
+document.addEventListener("DOMContentLoaded", function() {
+
+    var questionsArray = {{questions | json_encode | raw }};
+    {# console.log(questions); #}
+
+    questions = JSON.parse(questionsArray);
+    console.log(questions[0]);
+ 
+    let questionIndex = 0;
+    let questionNbr = 1;
+    let correctScore = 0;
+    var questionContainer = document.getElementById('question-container');
+    var questionElement = document.getElementById('question');
+    {# var categoryElement = document.getElementById('category'); #}
+    var answersElement = document.getElementById('answers');
+    const options = document.querySelector('.quiz-options');
+    const result = document.getElementById('result');
+    var totalQuestion = document.getElementById('total-question');
+    let nbrElement = document.getElementById('question-nbr');
+    var nextButton = document.getElementById('next-btn');
+    const resetBtn = document.getElementById('reset');
+    const checkBtn = document.getElementById('checkAnswer');
+
+    //fischer-yates model to shuffle
+    function shuffle (answers){ 
+      for (let i = answers.length - 1; i > 0; i--) { 
+        const j = Math.floor(Math.random() * (i + 1)); 
+        const temp = answers[i];
+        answers[i] = answers[j];
+        answers[j] = temp; 
+      } 
+    return answers; 
+    }; 
+
+    function showQuestion() {
+    var currentQuestion = questions[questionIndex];
+    console.log(questionNbr);
+    //categoryElement.innerText = currentQuestion.category;
+    nbrElement.innerText = questionNbr + '/10';
+    questionElement.innerText = currentQuestion.question;
+        answersElement.innerHTML = '';
+   
+    let answers = currentQuestion.incorrect_answers;
+    answers.push(currentQuestion.correct_answer);
+    console.log(answers);
+    shuffle(answers).forEach(function(answer) {
+    {# console.log(answer); #}
+    var li = document.createElement('li');
+    li.textContent = answer;
+    {# console.log(answer); #}
+    answersElement.appendChild(li);
+    });
+    selectOption();
+    };
+
+    // event listeners
+    function eventListeners(){
+        checkBtn.addEventListener('click', checkAnswer);
+        {# playAgainBtn.addEventListener('click', restartQuiz); #}
+    }
+
+    //selected answer
+    function selectOption(){
+    options.querySelectorAll('li').forEach(function(option){
+        option.addEventListener('click', function(){
+            if(options.querySelector('.selected')){
+                const activeOption = options.querySelector('.selected');
+                activeOption.classList.remove('selected');
+            }
+            option.classList.add('selected');
+        });
+      });
+    }
+
+    // answer checking
+function checkAnswer(){
+    checkBtn.disabled = true;
+    if(options.querySelector('.selected')){
+        let selectedAnswer = options.querySelector('.selected').textContent;
+        if(selectedAnswer == currentQuestion.correct_answer){
+            correctScore++;
+            console.log('this is correct')
+            result.innerHTML = `<p></i>Correct Answer!</p>`;
+        } else {
+            console.log('this is not correct')
+            result.innerHTML = `<p>Incorrect Answer!</p> <small><b>Correct Answer: </b>${currentQuestion.correct_answer}</small>`;
+        }
+        checkCount();
+    } else {
+        result.innerHTML = `<p><i class = "fas fa-question"></i>Please select an option!</p>`;
+        checkBtn.disabled = false;
+    }
+}
+
+
+    function showNextQuestion() {
+        questionIndex++;
+        questionNbr++;
+        if (questionIndex < questions.length) {
+            showQuestion();
+        } else {
+            questionContainer.innerHTML = '<h2>All questions have been shown.</h2>';
+        }
+    };
+
+    nextButton.addEventListener('click', showNextQuestion);
+
+    // Show the first question initially
+    showQuestion();
+
+});
+
+</script>
+
+{% endblock %}
